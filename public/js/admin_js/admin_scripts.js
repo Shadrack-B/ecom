@@ -21,6 +21,7 @@ $(document).ready(function () {
         });
     });
 
+    // Update status in sections page 
     $(".updateSectionStatus").click(function () {
         var status = $(this).text();
         var section_id = $(this).attr("section_id");
@@ -34,6 +35,29 @@ $(document).ready(function () {
                     $("#section-" + section_id).html("<a class='updateSectionStatus' href='javascript: void (0)'>Inactive</a>");
                 } else if (resp['status'] == 1) {
                     $("#section-" + section_id).html("<a class='updateSectionStatus' href='javascript: void (0)'>Active</a>");
+
+                }
+            },
+            error: function () {
+                alert("Error");
+            }
+        });
+    });
+
+    // Update categories in sections page 
+    $(".updateCategoryStatus").click(function () {
+        var status = $(this).text();
+        var category_id = $(this).attr("category_id");
+
+        $.ajax({
+            type: 'post',
+            url: '/admin/update-category-status',
+            data: { status: status, category_id: category_id },
+            success: function (resp) {
+                if (resp['status'] == 0) {
+                    $("#category-" + category_id).html("<a class='updateCategoryStatus' href='javascript: void (0)'>Inactive</a>");
+                } else if (resp['status'] == 1) {
+                    $("#category-" + category_id).html("<a class='updateCategoryStatus' href='javascript: void (0)'>Active</a>");
 
                 }
             },
