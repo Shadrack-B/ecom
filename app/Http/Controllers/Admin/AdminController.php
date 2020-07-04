@@ -9,7 +9,6 @@ use Session;
 use App\Admin;
 use Hash;
 use Image;
-// use Hash;
 
 class AdminController extends Controller
 {
@@ -144,6 +143,12 @@ class AdminController extends Controller
                 } else {
                     $imageName = "";
                 }
+
+                // Image Update
+                Admin::where('email', Auth::guard('admin')->user()->email)
+                    ->update([
+                        'image' => $imageName,
+                    ]);
             }
 
 
@@ -152,7 +157,6 @@ class AdminController extends Controller
                 ->update([
                     'name' => $data['admin_name'],
                     'mobile' => $data['admin_mobile'],
-                    'image' => $imageName,
                 ]);
             Session::flash('success_message', 'Details Updated Successfuly');
             return redirect()->back();
